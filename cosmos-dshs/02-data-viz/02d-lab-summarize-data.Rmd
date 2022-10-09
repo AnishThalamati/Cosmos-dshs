@@ -1,0 +1,158 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+```
+
+
+## Data
+
+The dataset, labeled as `arthiris` is provided on the [Teaching Statistics in Health Sciences Resource Portal](https://www.causeweb.org/tshs/arthritis-treatment/). The following information about the dataset is provided.
+
+>Rheumatoid arthritis (RA) patients in two age ranges who were receiving care at a clinic in Philadelphia are included. Variables include age and sex, several indicators of disease activity and whether or not patients were administered selected common treatments for RA. 
+
+
+```{r message=FALSE}
+arthritis <- read_csv("https://raw.githubusercontent.com/cosmos-uci-dshs/data/main/RheumArth_Tx_AgeComparisons.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate(sex = case_when(sex == 0 ~ "female",
+                   sex == 1 ~ "male")) %>% 
+  mutate(sex = as.factor(sex)) %>% 
+  mutate(age_gp = case_when(age_gp == 1 ~ "control",
+                   age_gp == 2 ~ "elderly")) %>% 
+  mutate(age_gp = as.factor(age_gp)) %>% 
+  mutate(cdai_yn = case_when(cdai_yn == 1 ~ "no",
+                             cdai_yn == 2 ~ "yes")) %>%
+  mutate(cdai_yn = as.factor(cdai_yn))
+
+           
+```
+
+A data dictionary for this dataset is provided [online](https://www.causeweb.org/tshs/datasets/RheumArth_Tx_AgeComparisons_Data%20Dictionary.pdf). Note that the variable has been changed to adhere to tidyverse style guide and a little bit of data cleaning has been done.
+
+Throughout the lab make sure to answer each question with code and text. 
+We don't want you to just run code but also be able to interpret what you see.
+Remember that you are working in your groups. 
+Work question by question, wait for each other, don't rush each other out, discuss everything with each other. 
+Enjoy the process. 
+This is not a marathon!
+
+Write the names of your group members here with your own name first:
+
+---
+
+## Question 1
+
+Familiarize yourself with the dataset. 
+How many variables are there? What variables catch your eye?
+How many patients are there?
+
+```{r}
+glimpse(arthritis)
+```
+```{r}
+nrow(arthritis)
+```
+
+```{r}
+
+ncol(arthritis)
+```
+There are `r nrow(arthritis)` variables 
+
+Some variables which caught my eye were the years from diagnosis and osteoporosis screening 
+
+There are `r ncol(arthritis)` patients 
+
+
+## Question 2
+
+Is the distribution of ages of patients right-skewed, left-skewed, or symmetric? What does this imply, are there more older patients with RA? Answer this question visually, and numerically. Calculate the mean and median and report which one is greater.
+
+```{r}
+ggplot(data = arthritis, 
+       aes(x = age))+
+  geom_histogram()
+```
+
+```{r}
+summarize(arthritis, mean(age))
+
+```
+
+```{r}
+summarize(arthritis, median(age))
+```
+
+
+The data is right skewed since the majority is 50-60 age, with the curve leaning to the write 
+
+## Question 3
+
+Is RA more commonly seen in men or women? Answer this question numerically and with a visual. 
+We will learn more rigorous to test this but for now we can eye-ball based on numbers and visuals.
+```{r}
+ggplot(data = arthritis, 
+       aes(x = sex))+
+  geom_bar()
+```
+```{r}
+count(arthritis,sex)
+```
+
+
+
+It affects more women as a whole with the graph denoted about 400 women diagnosed and 100 men, and the count function confirming this with 428 women being present with RA in the dataset and only 102 men 
+
+## Question 4
+
+What is relationship between age and sex? 
+Hint: think about what kind of variables age and sex are (numeric vs. categorical). 
+Review what kind of plot we have used for such variables.
+
+```{r}
+ggplot(arthritis,
+       aes(x = sex,
+           y = age)) + 
+  geom_boxplot()
+```
+The distribution of women and men in terms of their age and being diagnosed with arthritis is the same, the only difference between the sexes is that there are overall more women, but the median is higher for females and so is the range
+
+## Question 5
+
+Read about how [Clinical Disease Activity Index (CDAI)](https://www.rheumatology.org/Portals/0/Files/CDAI%20Form.pdf) is calculated. 
+Is it better for patients to have a high or low CDAI?
+
+It is better to have a low CDAI as 0 indicates the patient is doing very well, and higher score reflect worsening conditions and the neccesity for treatment 
+
+
+
+## Question 6
+
+Do "elderly" group have higher or lower CDAI overall when compared with the "control" group? Answer with a visual and comment on what you see.
+```{r}
+ggplot(arthritis,
+       aes(x = age_gp,
+           y = cdai)) + 
+  geom_boxplot()
+
+```
+
+Overall the elderly group has a lower CDAI score as the median is lower than the control group as indicated by the second quartile line on the box plot 
+
+## Question 7
+
+What is the relationship between `age` and `cdai`? Is there any strong and obvious relationship? Answer with a visual and comment on it.
+
+```{r}
+
+ggplot(arthritis,
+       aes(x = age,
+           y = cdai)) + 
+  geom_point()
+
+```
+
+No there is no strong relationship the distribution of cdai and age, it is more rough relationship as the relationship models more of a linear function 

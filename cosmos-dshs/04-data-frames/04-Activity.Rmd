@@ -1,0 +1,82 @@
+---
+title: "04-Activity"
+author: "Anish Thalamati"
+date: "7/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+Racial Disparties in Maternal Mortality
+
+1. What would a row of such data represent? 
+
+A row of data would represent one pregnancy and mother and the data associated with it
+
+2. What are the minimum required variables and the types of these variables that the researchers must have had in their dataset?
+
+ID(integer), Race(char), Implicit Bias Training(Logical), mortality(logical), time of death(integer)  
+
+Are there any other variables that you think that the researchers might have collected? If so, what would their types be?
+
+Type of Job(Factor), Illness due to Birth(Logical), marital status(logical), social connections(logical), impartial bias test(logical), financial status(factor)
+
+Heatwaves and Premature Child Birth 
+
+1. What variables do you think the researchers must have collected?
+
+Gestation period, survival of the infant, temperature, premature birth, time and date, infant status(ill,fine,dead)
+
+
+2. What variables do you think the research might have collected?
+
+Smoking, health issues, hospital, location 
+
+
+```{r}
+rheumdata <- readxl::read_excel("RheumArth_Tx_AgeComparisons.xlsx") %>%
+  mutate(cdai_level = case_when(
+    CDAI <=2.8 ~ "Remission", 
+    CDAI > 2.8 & CDAI <= 10 ~ "Low Disease Activity",
+    CDAI > 10 & CDAI <=22  ~ "Moderate Disease Activity",
+    CDAI > 22 ~ "High Disease Activity")) %>%
+  mutate(DAS_28_LVL = case_when(DAS_28 < 2.6~ "Remission",
+                                 DAS_28 >= 2.6 & DAS_28 <=3.2 ~ "Low Disease Activity",
+                                 DAS_28 > 3.2 & DAS_28 <= 5.1 ~ "Medium Disease Activity",
+                                 DAS_28 > 5.1 ~ "High Disease Activity")) %>%
+  mutate(sex = case_when(
+    Sex == 0 ~ "Female",
+    Sex == 1 ~ "Male")) %>%
+  mutate(Steroids_GT_5 = case_when(
+    Steroids_GT_5 == 0 ~ "No",
+    Steroids_GT_5 == 1 ~ "Yes"
+  )) %>%
+  mutate(AgeGp = case_when(
+    AgeGp == 1 ~ "Control",
+    AgeGp == 2 ~ "Elderly"
+  ))
+
+```
+
+```{r}
+glimpse(rheumdata)
+colnames(rheumdata)
+```
+
+Improved Questions 
+
+1. Do “elderly” group have higher or lower CDAI overall when compared with the “control” group? Answer with a visual and numeric answers and comment on what you see.
+
+2. Do women get diagnosed with AR at a later age than man? Answer with a visual and numbers. Comment on what you see.
+
+New Questions 
+
+1. How many patients are in remission?
+
+2. Are there any patients who have been diagnosed with RA for longer than 40 years?
+
+3. Are there any men who have been diagnosed with RA for longer than 40 years?

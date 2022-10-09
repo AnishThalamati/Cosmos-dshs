@@ -1,0 +1,84 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r message=FALSE}
+library(tidyverse)
+library(fivethirtyeight)
+library(openintro)
+library(titanic)
+data(candy_rankings)
+data(titanic_train)
+```
+
+
+## Usual Practice
+1. If you are asked to install any packages install them by clicking the "Install" button in the yellow banner.
+2. Always start by knitting any `.Rmd` file to make sure everything looks good. 
+3. Always run R chunks provided to you before moving onto the rest of the document.
+4. Change the author of this document in the YAML part since it will consist of your work.
+
+---
+
+## Activity 1
+
+1. Glimpse at the `candy_rankings` data frame.
+
+```{r}
+glimpse(candy_rankings)
+```
+
+
+
+2. Take a look at the head and tail of the `candy_rankings` data frame. 
+
+```{r}
+head(candy_rankings)
+tail(candy_rankings)
+```
+
+
+3. How many variables are there in the `candy_rankings` data frame? Answer with inline code.
+
+```{r}
+ncol(candy_rankings)
+```
+
+
+There are `r ncol(candy_rankings)` variables in the dataframe 
+
+4. How many observations are there in the `candy_rankings` data frame? Answer with inline code.
+
+```{r}
+nrow(candy_rankings)
+```
+
+There are `r nrow(candy_rankings)` observations in the dataframe 
+
+Always knit your `.Rmd` file when you are done with an activity. 
+
+---
+
+## Activity 2
+
+During this activity we will be working with the `titanic_train` data frame.
+
+1. In the Console write `?titanic_train` to get to the documentation about this data frame. Familiarize yourself with the variables.  
+
+2. Take a glimpse at the data.   
+
+```{r}
+glimpse(titanic_train)
+```
+
+
+3. Discuss in your groups if the variable types are correct.
+If incorrect, note down what they should be changed to.
+
+4. So far, we have used data from different sources and none of them were related to health sciences yet. 
+We will change that pretty soon. In your groups, can you come up with logical, factor, integer, and double variables that could potentially be found in a hospital's database? 
+If you keep coming up with more than one example for each, keep noting them down.
+
+---
+

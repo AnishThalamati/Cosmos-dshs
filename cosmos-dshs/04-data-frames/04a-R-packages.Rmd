@@ -1,0 +1,22 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Names of Packages
+
+What packages have we used so far in all of our documents? Please go back to your previous documents and look through them. 
+
+
+## Function and Package Matching
+
+On your cheat sheets you have the functions that we learned. 
+For each function that we have learned so far, note down the package that the function is from in the following fashion:
+
+`package_name::function_name()`
+
+Do not write this in a chunk though as we do not to execute these functions.
+
+ggplot2::ggplot() 
+ggplot2:aes()
+base::mean()
+

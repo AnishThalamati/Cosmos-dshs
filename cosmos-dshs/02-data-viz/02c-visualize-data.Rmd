@@ -1,0 +1,95 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r message=FALSE}
+library(openintro)
+library(tidyverse)
+babies <- babies %>% 
+  mutate(smoke = as.logical(smoke),
+         parity = as.logical(parity))
+
+```
+
+## Usual Practice
+1. If you are asked to install any packages install them by clicking the "Install" button in the yellow banner.
+2. Always start by knitting any `.Rmd` file to make sure everything looks good. 
+3. Always run R chunks provided to you before moving onto the rest of the document.
+4. Write the [YAML part of](https://cosmos-uci-dshs.github.io/dshs-slides/week01/01b-intro-r.html#26) this document. 
+
+---
+
+Write out the examples from the slides. 
+Do not copy-paste. 
+
+```{r}
+ggplot(data = babies,
+  aes(x=smoke)) +
+geom_bar()
+```
+
+```{r}
+ggplot(data = babies, 
+       aes(x = bwt))+
+  geom_histogram()
+```
+```{r}
+ggplot(data = babies, 
+       aes(x=bwt))+
+  geom_histogram(binwidth = 15)
+  
+```
+```{r}
+ggplot(data = babies,
+       aes(x = bwt)) +
+  geom_histogram(binwidth = 15, 
+                 color = "white",
+                 fill = "deepskyblue")
+```
+```{r}
+ggplot(data = babies, 
+       aes(x = smoke,
+           fill = parity)) + 
+  geom_bar(position = "fill")
+```
+
+```{r}
+ggplot(data = babies, 
+       aes(x=smoke, 
+           fill = parity))+
+  geom_bar(position = "dodge")
+```
+
+```{r}
+ggplot(babies, 
+       aes(x = smoke, 
+           y= bwt)) + 
+  geom_boxplot()
+```
+
+```{r}
+ggplot(babies, 
+       aes(x = gestation, 
+           y = bwt)) + 
+  geom_point()
+```
+```{r}
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           color = smoke)) +
+  geom_point()
+```
+```{r}
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke,
+           size = weight)) +
+  geom_point()
+```
+
+
+Part of the learning process is making typos and trying to fix them.

@@ -1,0 +1,67 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r message=FALSE}
+library(openintro)
+library(tidyverse)
+babies <- babies %>% 
+  mutate(smoke = as.logical(smoke),
+         parity = as.logical(parity))
+
+```
+
+## Usual Practice
+1. If you are asked to install any packages install them by clicking the "Install" button in the yellow banner.
+2. Always start by knitting any `.Rmd` file to make sure everything looks good. 
+3. Always run R chunks provided to you before moving onto the rest of the document.
+4. Write the [YAML part of](https://cosmos-uci-dshs.github.io/dshs-slides/week01/01b-intro-r.html#26) this document. 
+
+---
+
+Write out the examples from the slides. 
+Do not copy-paste. 
+Part of the learning process is making typos and trying to fix them.
+
+```{r}
+ggplot(babies, 
+       aes(x = gestation,
+           y = bwt, 
+           shape = smoke,
+           color = smoke)) + 
+  geom_point(size = 4) + 
+  labs( x = "Gestastion (days)", 
+        y = "Birth Weight (ounces)",
+        title = "Gestation and Birth Weight by Mother's Smoker Status")+
+  theme_bw()+
+  theme(text = element_text(size = 10))+
+  theme_classic() 
+```
+
+```{r}
+ggplot(babies, 
+       aes( x = gestation, 
+            y = bwt,
+            shape = smoke, 
+            color = smoke)) + 
+  geom_point(size = 4) + 
+  facet_grid(.~parity)
+```
+
+```{r}
+ggplot(babies, 
+       aes( x = gestation, 
+            y = bwt,
+            shape = smoke, 
+            color = smoke)) + 
+  geom_point(size = 4) + 
+  facet_grid(parity~.)
+```
+
+```{r}
+c(4,8,16) %>%
+  mean() %>%
+  round()
+```
+

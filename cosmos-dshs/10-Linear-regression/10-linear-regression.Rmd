@@ -1,0 +1,141 @@
+---
+title: "10-Linear-Regression"
+author: "Anish Thalamati"
+date: "7/19/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(MASS)
+library(mfp)
+data("birthwt")
+data("Pima.tr")
+Platelet<- read.table("Platelet.txt", header=T, sep="")
+data(bodyfat, package="mfp")
+saltBP <- read.table(file="saltBP.txt", header=T, sep="")
+```
+
+```{r}
+fit<- lm(siri ~ abdomen, data=bodyfat)
+```
+
+```{r}
+fit 
+```
+
+```{r}
+summary(fit)
+```
+
+```{r}
+names(fit)
+```
+
+```{r}
+fit$coefficients
+```
+
+```{r}
+fit$fitted.values[1:5]
+```
+
+```{r}
+fit$residuals[1:5]
+```
+
+```{r}
+plot(bodyfat$abdomen, bodyfat$siri, main="Scatterplot for Percent Body Fat by Abdomen",  xlab='Abdomen', ylab='Percent Body Fat')
+abline(fit)
+```
+
+```{r}
+multReg <- lm(siri ~ abdomen + weight , data=bodyfat)
+summary(multReg)
+```
+
+Activity 1 
+
+```{r}
+fit<- lm(bwt ~ lwt, data=birthwt)
+```
+
+```{r}
+fit 
+```
+
+```{r}
+confint(fit)
+```
+
+```{r}
+summary(fit)
+```
+
+```{r}
+fit$coefficients
+```
+
+
+```{r}
+plot(birthwt$lwt, birthwt$bwt, main="Scatterplot for bwt based on lwt",  xlab='lwt', ylab='bwt')
+abline(fit)
+```
+
+Activity 2 
+
+```{r}
+fit2 <- lm(bwt ~ lwt + factor(smoke), data=birthwt)
+```
+
+```{r}
+fit2
+```
+
+
+```{r}
+confint(fit2)
+```
+```{r}
+fit2$coefficients
+```
+
+```{r}
+summary(fit2)
+```
+
+Activity 3 
+
+```{r}
+bodytemp <- read.table("BodyTemperature.txt", header=T, sep="")
+glimpse(bodytemp)
+
+```
+
+```{r}
+fit3<- lm(Temperature ~ HeartRate, data=bodytemp)
+```
+
+```{r}
+fit3 
+```
+
+```{r}
+confint(fit3)
+```
+
+```{r}
+summary(fit3)
+```
+
+```{r}
+plot(bodytemp$HeartRate, bodytemp$Temperature, main="Scatterplot for temperature based on heart rate",  xlab='heart rate', ylab='temperature')
+abline(fit3)
+```
+
+Estimation of heart bate based on linear model for patient with 75 bpm is 98.04725 degrees as the body temperature

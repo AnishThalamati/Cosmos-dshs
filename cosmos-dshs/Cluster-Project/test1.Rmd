@@ -1,0 +1,110 @@
+---
+title: "test1"
+author: "Anish Thalamati"
+date: "7/27/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Subsetting Data 
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(MASS)
+library(mfp)
+library(tidyverse)
+EMA_Data <- read.csv("EMA_data.csv")
+```
+
+```{r}
+private_insurance<- subset(EMA_Data, EMA_Data$insurance == "Private insurance" & EMA_Data$t0_obstet_hist1___99 == "Checked" & EMA_Data$Trimester == 2)
+```
+
+```{r}
+bin1 <- subset(private_insurance, private_insurance$PercievedStressScore <= 0.5)
+
+bin2 <- subset(private_insurance, private_insurance$PercievedStressScore <=1 & private_insurance$PercievedStressScore> 0.5)
+
+bin3 <- subset(private_insurance, private_insurance$PercievedStressScore <=1.5 & private_insurance$PercievedStressScore > 1)
+
+bin4 <- subset(private_insurance, private_insurance$PercievedStressScore <=2 & private_insurance$PercievedStressScore > 1.5)
+
+bin5 <- subset(private_insurance, private_insurance$PercievedStressScore <=2.5 & private_insurance$PercievedStressScore > 2)
+
+bin6 <- subset(private_insurance, private_insurance$PercievedStressScore <=3 & private_insurance$PercievedStressScore > 2.5)
+
+bin7 <- subset(private_insurance, private_insurance$PercievedStressScore <=3.5 & private_insurance$PercievedStressScore > 3)
+
+bin8 <- subset(private_insurance, private_insurance$PercievedStressScore <= 4 & private_insurance$PercievedStressScore > 3.5)
+
+```
+
+
+```{r}
+count1 <- nrow(bin1)
+
+count2 <- nrow(bin2)
+
+count3 <- nrow(bin3)
+
+count4 <- nrow(bin4)
+
+count5 <- nrow(bin5)
+
+count6 <- nrow(bin6)
+
+count7 <- nrow(bin7)
+
+count8 <- nrow(bin8)
+```
+
+
+```{r}
+prob1 <- (count1/(nrow(private_insurance)))*100
+prob2 <- (count2/(nrow(private_insurance)))*100
+prob3 <- (count3/(nrow(private_insurance)))*100
+prob4 <- (count4/(nrow(private_insurance)))*100
+prob5 <- (count5/(nrow(private_insurance)))*100
+prob6 <- (count6/(nrow(private_insurance)))*100
+prob7 <- (count7/(nrow(private_insurance)))*100
+prob8 <- (count8/(nrow(private_insurance)))*100
+```
+
+
+
+```{r}
+prob <- c(prob1,prob2,prob3,prob4,prob5,prob6,prob7,prob8)
+```
+
+```{r}
+cnt <- c(seq(from = 0.25, to = 3.75, by = 0.5))
+cnt <- rep(c(cnt),times=prob)
+cnt <- c(cnt,3.25,3.75)
+cnt <- cnt + rnorm(100,0,0.05)
+
+cnt <- data.frame("cnt"= cnt)
+```
+
+```{r}
+dens<-density(private_insurance$PercievedStressScore ,adjust=1.03)
+```
+
+
+```{r}
+ggplot(cnt, aes(x=cnt))+
+  geom_histogram(bins = 8, fill = "lightblue", col = "black")+
+      theme(
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA)
+        ) +
+  ggtitle("Stress Scores for Patients at risk of Obstetric Disease with Private Insurance") +
+  geom_density(aes(y = ..density..*40),lwd = 2, col = "black", adjust = 1) +
+  xlab("Count") + ylab("Percentage")
+```
+

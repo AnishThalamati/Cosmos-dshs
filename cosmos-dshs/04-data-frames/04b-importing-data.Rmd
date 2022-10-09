@@ -1,0 +1,29 @@
+---
+title: "importing-data"
+author: "Anish Thalamati"
+date: "7/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(tidyverse)
+```
+
+```{r}
+spotify <- readxl::read_xlsx("spotify.xlsx")
+breast_cancer <- read.csv("ACPs_Breast_cancer.csv")
+lung_cancer <- read.csv("ACPs_Lung_cancer.csv")
+hiv_antibody <- read.csv("HIV_J.XPT")
+```
+
+```{r}
+glimpse(breast_cancer)
+glimpse(lung_cancer)
+glimpse(spotify)
+glimpse(hiv_antibody)
+```
+
+

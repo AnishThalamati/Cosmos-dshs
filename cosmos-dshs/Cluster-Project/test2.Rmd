@@ -1,0 +1,51 @@
+---
+title: "test2"
+author: "Anish Thalamati"
+date: "7/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(MASS)
+library(mfp)
+EMA_Data <- read.csv("EMA_data.csv")
+```
+
+```{r}
+obstetric_disease2 <- EMA_Data[!duplicated(EMA_Data$ID),]
+left_joined <- left_join(avg_data, obstetric_disease2, by = "ID")
+glimpse(left_joined)
+```
+
+```{r}
+new_set <- subset(left_joined,left_joined$insurance != "uninsured" & left_joined$insurance != "Insured but type unknown" & t0_obstet_hist1___99 == "Checked")
+glimpse(new_set)
+```
+
+
+```{r}
+ggplot(data = new_set,
+aes(x = insurance,
+y = PercievedStressScore.x,
+fill = insurance), color = insurance)+ scale_fill_manual(
+values = colorRampPalette(
+RColorBrewer::brewer.pal(n = 5, name = "Greens"))(5),
+guide = guide_legend(reverse = TRUE))+
+facet_wrap(~Trimester) +
+geom_boxplot(alpha = 0.5) +
+facet_wrap(~Trimester, scale = "free") +
+labs(title = "Stress Scores for Obstetric patients based on insurance",x = "Insurance Type", y ="Perceived Stress Score")+
+theme_minimal() +
+theme(axis.text.x = element_blank(),
+axis.ticks.x = element_blank(),
+legend.title = element_blank())
+
+
+```

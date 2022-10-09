@@ -1,0 +1,41 @@
+---
+title: "09-t.test"
+author: "Anish Thalamati"
+date: "7/19/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(MASS)
+library(mfp)
+data("birthwt")
+data("Pima.te")
+
+
+birthwt.tab <- table(birthwt$smoke, birthwt$low)
+
+```
+
+```{r}
+Platelet<- read.table("data/Platelet.txt", header=T, sep="")
+data(bodyfat, package="mfp")
+```
+
+```{r}
+1.
+t.test(bwt~smoke, mu=0, alternative='two.sided', data=birthwt)
+p-value = 0.007 so reject null because 0.0007 < 0.1 is not 95 percent
+
+birthwt %>%
+  mutate(smoke = as.factor(smoke)) %.%
+  ggplot(aes(x = smoke, y = bwt)) + 
+  geom_boxplot()
+```
+```
+

@@ -1,0 +1,71 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Note: You cannot knit this document, until you finish Question 1.
+
+## Question 1
+
+Load packages `tidyverse` and `nycflights13`. You have already downloaded these packages in the past.
+
+```{r}
+library(tidyverse)
+library(nycflights13)
+```
+
+
+
+
+## Question 2 
+
+The `nycflights13` package has multiple data frames including `flights` and `weather`. You can put the data into your Environment using the `data()` function e.g. `data(flights)`. Since these data come from a package there is documentation so you can get to know the variables in the documentation (e.g. `?flights`)
+
+```{r}
+data(flights)
+data(weather)
+glimpse(flights)
+glimpse(weather)
+```
+
+
+
+
+## Question 3
+
+Join the two data frames. Make sure to "save" the new data frame that is created by joining two data frames. You may want to read the next question before deciding which join function to use.
+
+```{r}
+combined <- right_join(weather,flights, by = c("year","month","day","hour","time_hour","origin"))
+glimpse(combined)
+```
+
+
+## Question 4
+
+How many flights were delayed at the departure point when the temperature was less than 32 degrees?
+
+```{r}
+filter(combined, temp < 32) %>%
+  filter(dep_delay > 0) %>%
+  nrow()
+
+```
+
+
+
+## Question 5
+
+When a flight was delayed at the departure point, what was the average temperature?  
+
+```{r}
+new_combined <- filter(combined, dep_delay > 0)
+summarize(new_combined,mean(temp))
+```
+
+
+
+
+## Question 6
+
+Which airline(s) had the highest median of `dep_delay`? You will need to also join the `airlines` data frame in order to answer this question. 

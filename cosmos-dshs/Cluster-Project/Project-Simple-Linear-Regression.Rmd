@@ -1,0 +1,32 @@
+---
+title: "Project-Simple-Linear-Regression"
+author: "Victoria Liu"
+date: "7/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+avg_data2 = aggregate(PercievedStressScore ~ ID, EMA1, mean) %>% 
+  glimpse()
+
+left_joined <- left_join(avg_data2, obstetric_disease2, by = "ID")
+#PercievedStressScore.x
+
+#group_by 
+avg_data1 <- group_by(EMA1, ID) %>%
+  summarize(mean(PercievedStressScore)) #this did the same thing as the aggregate function
+
+obstetric_disease1 <- group_by(EMA1, t0_obstet_hist1___99) %>%
+  obstetric_disease2 <- EMA1[!duplicated(EMA1$ID),]
+  summarize(min(t0_obstet_hist1___99)) %>%
+  View(obstetric_disease1)
+reshape(obstetric_disease1)#1 would keep the first row
+
+#cross sectional analysis at baseline
+```
+
